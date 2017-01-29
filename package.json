@@ -1,0 +1,23 @@
+{
+  "name": "markdown-editor-2",
+  "version": "0.1.0",
+  "private": true,
+  "devDependencies": {
+    "react-scripts": "0.8.5"
+  },
+  "dependencies": {
+    "@blueprintjs/core": "^1.7.0",
+    "katex": "^0.7.1",
+    "react": "^15.4.2",
+    "react-ace": "^4.1.1",
+    "react-addons-css-transition-group": "^15.4.2",
+    "react-dom": "^15.4.2",
+    "showdown": "^1.6.2"
+  },
+  "scripts": {
+    "start": "react-scripts start",
+    "build": "react-scripts build",
+    "test": "react-scripts test --env=jsdom",
+    "eject": "react-scripts eject"
+  }
+}

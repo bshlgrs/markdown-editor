@@ -1,0 +1,56 @@
+@import "~@blueprintjs/core/dist/blueprint.css";
+
+.App {
+
+}
+
+.App-header {
+    display: flex;
+    background-color: white;
+    height: 60px;
+    padding-top: 20px;
+    width: 100%;
+    position: absolute;
+    align-items: center;
+    justify-content: center;
+}
+
+
+#ace-div {
+    top: 100px;
+    bottom: 0px;
+    position: absolute;
+}
+
+.menubar {
+    top: 60px;
+    height: 40px;
+    padding: 5px;
+    position: absolute;
+    width: 100%;
+    background-color: #DDD;
+}
+.menubar .pt-button {
+    margin-left: 2px;
+    margin-right: 3px;
+}
+
+.preview {
+    top: 100px;
+    bottom: 0px;
+    position: absolute;
+    margin-left: 50%;
+    width: 50%;
+    overflow: scroll;
+    background-color: lightgrey;
+}
+
+.preview-contents {
+    background-color: white;
+    margin: 15px;
+    padding: 10px;
+    text-align: justify;
+    font-family: serif;
+    box-shadow: 5px 5px grey;
+    font-size: 16px;
+}
