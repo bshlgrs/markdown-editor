@@ -1,44 +1,54 @@
 import katex from 'katex';
 import showdown from 'showdown';
+import jsyaml from 'js-yaml';
 
 const converter = new showdown.Converter();
 
 function translate(input) {
-  const equations = {};
+  const markdownSkippedSections = {};
+  let frontMatter = null;
 
-  input = input.replace(/\$\^\$([\s\S]*?)\$\^\$/g, (_, stuff) => {
-    let newCode = Math.random();
-    let res;
-    try {
-      res = katex.renderToString(stuff, { displayMode: true, throwOnError: false });
-    } catch (e) {
-      res = `<span style="color: red;">${stuff}</span>`;
-    }
+  let replacements = [
+    [/\$\^\$([\s\S]*?)\$\^\$/g, (x) => {
+      try {
+        return katex.renderToString(x, { displayMode: true, throwOnError: false });
+      } catch (e) {
+        return `<span style="color: red;">${x}</span>`;
+      }
+    }],
+    [/\$\$([\s\S]*?)\$\$/g, (x) => {
+      try {
+        return katex.renderToString(x, { displayMode: false, throwOnError: false });
+      } catch (e) {
+        return `<span style="color: red;">${x}</span>`;
+      }
+    }],
+    [/^---$([\s\S]*?)^---$/gm, (x) => {
+      if (frontMatter === null) {
+        frontMatter = jsyaml.safeLoad(x);
+      }
+      return '';
+    }]
+  ];
 
-    equations[newCode] = res;
+  let result = input;
 
-    return newCode;
-  }).replace(/\$\$([\s\S]*?)\$\$/g, (_, stuff) => {
-    let newCode = Math.random();
-    let res;
-    try {
-      res = katex.renderToString(stuff, { displayMode: false, throwOnError: false });
-    } catch (e) {
-      res = `<span style="color: red;">${stuff}</span>`;
-    }
-
-    equations[newCode] = res;
-
-    return newCode;
+  replacements.forEach((x) => {
+    let [regex, f] = x;
+    result = result.replace(regex, (_, stuff) => {
+      let newCode = Math.random();
+      markdownSkippedSections[newCode] = f(stuff);
+      return newCode;
+    });
   });
 
-  let result = converter.makeHtml(input);
+  result = converter.makeHtml(result);
 
-  Object.keys(equations).forEach((key) => {
-    result = result.replace(key, equations[key]);
+  Object.keys(markdownSkippedSections).forEach((key) => {
+    result = result.replace(key, markdownSkippedSections[key]);
   });
 
-  return result;
+  return (frontMatter ? `<h1>${frontMatter.title}</h1>` : '') + result;
 }
 
 export default translate;
