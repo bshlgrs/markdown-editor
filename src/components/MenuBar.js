@@ -37,6 +37,14 @@ class MenuBar extends Component {
       <MenuItem text="About this editor" />
     </Menu>;
 
+    const displayMenu = <div>
+      <select className="pt-select" value={this.props.display} onChange={(e) => this.props.setDisplay(e.target.value)}>
+        <option value="rendered-html">Rendered</option>
+        <option value="raw-html">Raw</option>
+        <option value="latex">LaTeX</option>
+      </select>
+    </div>;
+
     return <div className="menubar">
       <Popover content={fileMenu} position={Position.BOTTOM_LEFT}>
         <Button  text="File" />
@@ -44,8 +52,8 @@ class MenuBar extends Component {
       <Popover content={fileMenu} position={Position.BOTTOM_LEFT}>
         <Button  text="Edit" />
       </Popover>
-      <Popover content={fileMenu} position={Position.BOTTOM_LEFT}>
-        <Button  text="Insert" />
+      <Popover content={displayMenu} popoverClassName="pt-popover-content-sizing" position={Position.BOTTOM_LEFT}>
+        <Button  text="View" />
       </Popover>
       <Popover content={helpMenu} position={Position.BOTTOM_LEFT}>
         <Button  text="Help" />

@@ -1,5 +1,5 @@
 import React, { Component } from 'react';
-import { Button, Dialog, EditableText, Intent, MenuItem, Menu, MenuDivider, Popover, Position } from '@blueprintjs/core';
+import { EditableText, Position, Toaster } from '@blueprintjs/core';
 import AceEditor from 'react-ace';
 import 'brace/mode/markdown';
 import 'brace/theme/github';
@@ -8,8 +8,19 @@ import 'katex/dist/katex.min.css';
 import MenuBar from './MenuBar'
 import translate from '../logic/translate'
 
-class EditDocument extends Component {
 
+const OurToaster = Toaster.create({
+  className: "my-toaster",
+  position: Position.TOP_RIGHT,
+});
+
+class EditDocument extends Component {
+  constructor (props) {
+    super(props);
+    this.state = {
+      display: "rendered-html"
+    }
+  }
   onChange(newValue) {
     this.props.changeContents(newValue);
   }
@@ -25,10 +36,15 @@ class EditDocument extends Component {
       <div className="App">
         <div className="App-header">
           <h2>
-            <EditableText value={this.props.title} onChange={(v) => this.props.changeTitle(v)} placeholder="Untitled document" />
+            <EditableText
+              value={this.props.title}
+              onChange={(v) => this.props.changeTitle(v)}
+              placeholder="Untitled document"
+              onConfirm={(v) => OurToaster.show({ message: `Document renamed to ${v}!` })}
+            />
           </h2>
         </div>
-        <MenuBar />
+        <MenuBar display={this.state.display} setDisplay={(v) => this.setState({ display: v })}/>
 
         <div className="row">
           <AceEditor
@@ -43,7 +59,10 @@ class EditDocument extends Component {
             value={this.props.contents}
           />
           <div className="preview">
-            <div className="preview-contents" dangerouslySetInnerHTML={this.htmlValue()} />
+            {this.state.display == "rendered-html" && <div className="preview-contents" dangerouslySetInnerHTML={this.htmlValue()} />}
+            {this.state.display == "raw-html" && <div className="preview-contents">
+              {this.htmlValue().__html.split("\n").map((x, idx) => <p key={idx}>{x}</p>)}
+            </div>}
           </div>
         </div>
 
