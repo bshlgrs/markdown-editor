@@ -4,6 +4,8 @@ This is a Markdown/LaTeX editor, similar to what [dillinger.io](http://dillinger
 
 ![screenshot](./example.png)
 
+The frontend is deployed at [docs.shlegeris.com](http://docs.shlegeris.com/)
+
 Here's my idea for this web app: When I got to university, I wanted to be able to use LaTeX
 for my math assignments. But it was inconvenient and annoying to have to learn to use a whole new set of word processing
 software. Also, LaTeX is quite heavyweight. I'd much rather write in Markdown most of the time.
@@ -31,3 +33,8 @@ This is then translated to Markdown and LaTeX on the right hand column.
 
 - Images
 
+
+## notes
+
+- check out whether CodeMirror is actually better for markdown than Ace is. I suspect it might be
+- maybe make the CSS output use Computer Modern
