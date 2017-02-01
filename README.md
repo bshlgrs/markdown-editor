@@ -22,6 +22,10 @@ This is then translated to Markdown and LaTeX on the right hand column.
     - Auth
     - Storing documents
 - Export to LaTeX/PDF/HTML
+- Finish up the various menus in the UI
+- Useful help menus
+    - under "Help with markdown" link to a tutorial
+    - under "Help with LaTeX" link to, among other things, [detexify](http://detexify.kirelabs.org/classify.html)
 
 ## Stretch features
 
